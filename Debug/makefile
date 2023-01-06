@@ -23,7 +23,7 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := 222
+BUILD_ARTIFACT_NAME := cjson_test
 BUILD_ARTIFACT_EXTENSION :=
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
@@ -34,19 +34,19 @@ BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ART
 all: main-build
 
 # 主构建目标
-main-build: 222
+main-build: cjson_test
 
 # 工具调用
-222: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
+cjson_test: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo '正在构建目标： $@'
 	@echo '正在调用： GNU C 链接器'
-	gcc  -o "222" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "cjson_test" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo '已结束构建目标： $@'
 	@echo ' '
 
 # 其他目标
 clean:
-	-$(RM) 222
+	-$(RM) cjson_test
 	-@echo ' '
 
 .PHONY: all clean dependents main-build

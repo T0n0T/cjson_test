@@ -66,7 +66,7 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.release.1975317744." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.release.750386691" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.release">
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.1631328806" name="前缀" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-none-linux-gnueabihf-" valueType="string"/>
-							<option id="cdt.managedbuild.option.gnu.cross.path.308259044" name="路径" superClass="cdt.managedbuild.option.gnu.cross.path" value="/home/abc/Documents/arm_toolchain/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf/bin" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.308259044" name="路径" superClass="cdt.managedbuild.option.gnu.cross.path" value="home/tiger/Documents/arm-linux-gcc/armv7-eabihf-gcc/bin" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1058974326" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/222}/Release" id="cdt.managedbuild.builder.gnu.cross.1371897454" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="GNU Make 构建器" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.775643884" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
@@ -115,17 +115,17 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.2038684265.1351710772." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1782715954" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base">
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.344256569" name="前缀" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-buildroot-linux-musleabihf-" valueType="string"/>
-							<option id="cdt.managedbuild.option.gnu.cross.path.1332314925" name="路径" superClass="cdt.managedbuild.option.gnu.cross.path" value="/home/abc/Documents/arm_toolchain/armv7-eabihf-gcc/bin" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1332314925" name="路径" superClass="cdt.managedbuild.option.gnu.cross.path" value="/home/tiger/Documents/arm-linux-gcc/armv7-eabihf-gcc/bin" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1180760492" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/cjson_test}/Debug-armv7" id="cdt.managedbuild.builder.gnu.cross.138361840" name="GNU Make 构建器.Debug-armv7" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/cjson_test}/Debug-armv7" id="cdt.managedbuild.builder.gnu.cross.138361840" keepEnvironmentInBuildfile="false" name="GNU Make 构建器" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.152396968" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
-								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1784473297" superClass="gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
-								<option defaultValue="gnu.c.debugging.level.max" id="gnu.c.compiler.option.debugging.level.1465601133" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1784473297" name="优化级别" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option defaultValue="gnu.c.debugging.level.max" id="gnu.c.compiler.option.debugging.level.1465601133" name="调试级别" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.490255902" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.515642612" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
-								<option id="gnu.cpp.compiler.option.optimization.level.699250479" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
-								<option defaultValue="gnu.cpp.compiler.debugging.level.max" id="gnu.cpp.compiler.option.debugging.level.207552602" superClass="gnu.cpp.compiler.option.debugging.level" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.optimization.level.699250479" name="优化级别" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option defaultValue="gnu.cpp.compiler.debugging.level.max" id="gnu.cpp.compiler.option.debugging.level.207552602" name="调试级别" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" valueType="enumerated"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.451812078" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1211785034" superClass="cdt.managedbuild.tool.gnu.c.linker.input">

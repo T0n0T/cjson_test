@@ -15,6 +15,24 @@
 
 const char* config_path = "./config.json";
 
+static int write_file(const char *filename,char *out)
+{
+    FILE *fp = NULL;
+
+    fp = fopen(filename,"w");
+    if(fp == NULL)
+    {
+        fprintf(stderr,"open file failed\n");
+        exit(-1);
+    }
+    fprintf(fp,"%s",out);
+
+    if(fp != NULL)
+        fclose(fp);
+
+    return 0;
+}
+
 /**
  * @brief 用于生产默认的json配置文件
  *
@@ -22,7 +40,6 @@ const char* config_path = "./config.json";
  */
 cJSON* json_create_default(void)
 {
-	FILE*  fp = NULL;
     cJSON* cjson_default = NULL;
     cJSON* cjson_lora_para = NULL;
     cJSON* cjson_earth_control_para = NULL;
@@ -67,13 +84,14 @@ cJSON* json_create_default(void)
     cJSON_AddItemToObject(cjson_default, "mqtt", cjson_mqtt_para);
 
     /* 写入default配置    */
-	fp = fopen(config_path, "w");
-	if(!fp) {
-        printf("fopen error!\n");
-        return NULL;
-    }
-	fprintf(fp,"%s", cJSON_Print(cjson_default));
-	fclose(fp);
+//	fp = fopen(config_path, "w");
+//	if(!fp) {
+//        printf("fopen error!\n");
+//        return NULL;
+//    }
+//	fprintf(fp,"%s", cJSON_Print(cjson_default));
+//	fclose(fp);
+    write_file(config_path, cJSON_Print(cjson_default));
 
     return cjson_default;
 }
@@ -96,7 +114,8 @@ int json_load_str(const char *fpath, char *str)
 	//指向fp尾，并汇报位置，此处小于0，则fp无效，pos为fp总长
 	fseek(fp, 0, SEEK_END);
 	length = ftell(fp);
-	if (ftell(fp) < 0) {
+	printf("length: %ld\n",length);
+	if (ftell(fp) < 1) {
 		printf("%s is not efficient.\n",fpath);
 		fclose(fp);
 		return 0;
@@ -140,7 +159,7 @@ static void json_str_prase(cJSON* cjson_data)
 /**
  * @brief   用于解析读入的json语句字符串str
  */
-cJSON* json_work(void)
+cJSON* json_load(void)
 {
 	char str[1024];
 	int result = 0;
@@ -157,9 +176,8 @@ cJSON* json_work(void)
 	if (cjson_data == NULL)
 		return NULL;
 
-	json_str_prase(cjson_data);
-
 	// 释放配置
+	printf("----------get config is OK------------\n");
 	return cjson_data;
 }
 
@@ -172,39 +190,61 @@ cJSON* json_work(void)
  * @param string2		     要更改的元素名称嵌套2
  * @param newitem	     新录入的json结构体
  */
-void json_edit(int index, cJSON* cjson_data, char** string, cJSON* newitem)
+void json_edit(int nest, cJSON* cjson_data, char** string, cJSON* newitem)
 {
 	cJSON* prechange = NULL;
-	prechange = cJSON_GetObjectItem(cjson_data, *string);
-	for (int i = 1; i < index; i++) {
+
+	prechange = cjson_data;
+	for (int i = 0; i < nest-1; i++) {
 		prechange = cJSON_GetObjectItem(prechange, *(string+i));
 	}
-	cJSON_ReplaceItemInObject(prechange, *(string+index-1), newitem);
 
-//	cJSON* data = cJSON_GetObjectItem(cjson_data, *string);
-//	data = cJSON_GetObjectItem(data, *(string+1));
-	printf("ip: %s\n", prechange->valuestring);
-	cJSON_Delete(prechange);
+	cJSON_ReplaceItemInObject(prechange, *(string+nest-1), newitem);
+	write_file(config_path, cJSON_Print(cjson_data));
+
 }
 
-void edit_str(int index, char** string)
+void print_help(void)
 {
-	printf("%s\n", *string);
-	for (int i = 1; i < index; i++) {
-		printf("%s\n", *(string+i));
+	printf("cjson script help:\n");
+	printf("using \"cjson_test --default\" to parse a config.json file,if config.json is not exit. "
+			"Script will create a default config.json.\n");
+	printf("using \"cjson_test --edit nest string1 string2...\" to edit the config.json, and"
+			"parse the current config.json.\n");
+}
+
+
+
+int main(int argc, char** argv)
+{
+	cJSON* cjson_data = NULL;
+
+	if (argc == 1) {
+		print_help();
+	} else {
+		if (!strcmp("--default", argv[1])) {
+			cjson_data = json_create_default();
+		}else if (!strcmp("--edit", argv[1])) {
+			cjson_data = json_load();
+			json_edit(atoi(argv[2]), cjson_data, argv+3, cJSON_CreateString(argv[argc-1]));
+//		    printf("-----------------------------\n");
+//		    printf("argc = %d\n", argc);
+//		    printf("argv[2] = %d\n", atoi(argv[2]));
+//		    char **ch;
+//		    ch = argv + 3;
+//		    printf("argv[3] = %s\n", *(ch));
+//		    printf("argv[4] = %s\n", *(ch + 1));
+//		    printf("argv[5] = %s\n", *(ch + 2));
+		}else if (!strcmp("--parse", argv[1])) {
+			cjson_data = json_load();
+			json_str_prase(cjson_data);
+		} else {
+			print_help();
+		}
+
+		printf("-----------------------------\n");
+		printf("%s\n", cJSON_Print(cjson_data));
 	}
-	printf("%s\n", *(string+index-1));
-}
 
-int main(void)
-{
-	cJSON* cjson_data = json_work();
-	printf("%s\n", cJSON_Print(cjson_data));
-	printf("-----------------------------\n");
-	char* str[] = {"lora_para", "mqtt_ip"};
-	char** ch = str ;
-	json_edit(2, cjson_data, ch, cJSON_CreateString("1.0.0.1"));
-	cJSON_Delete(cjson_data);
-//	edit_str(2, ch);
 	return 0;
 }
